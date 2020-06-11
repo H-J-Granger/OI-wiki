@@ -32,7 +32,7 @@ case 2: $u$ 已拜访过，遇到标记 "o" 代表需要 **缩花** ，否则代
 
 ![general-matching-3](./images/general-matching-3.png)
 
-设非树边（形成环的那条边）为(u, v)，定义花根 $h=LCA(u,v)$ 。
+设非树边（形成环的那条边）为 $(u,v)$ ，定义花根 $h=LCA(u,v)$ 。
 奇环是交替的，有且仅有 $h$ 的两条邻边类型相同，都是非匹配边。
 那么进入 $h$ 的树边肯定是匹配边，环上除了 $h$ 以外其他点往环外的边都是非匹配边。
 
@@ -166,9 +166,8 @@ vector<int> find_max_unweighted_matching(const undirectedgraph<T> &g) {
           label[match[u]] = 0;
           q.push(match[u]);
           continue;
-        } else if (label[u] == 0 &&
-                   orig[v] !=
-                       orig[u]) {  // 找到已拜访点 且标记同为"o" 代表找到"花"
+        } else if (label[u] == 0 && orig[v] != orig[u]) {
+          // 找到已拜访点 且标记同为"o" 代表找到"花"
           int a = lca(orig[v], orig[u]);
           // 找LCA 然后缩花
           blossom(u, v, a);
