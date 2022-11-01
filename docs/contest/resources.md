@@ -31,6 +31,7 @@ author: Suyun514, ChungZH, Enter-tainer, StudyingFather, Konano, JulieSigtuna, G
 - [清澄](http://www.tsinsen.com/)：始于 2005 年，由 [胡伟栋](http://www.hhwdd.com/) 开发。自 2019 年 9 月 1 日起不再对外提供服务。
 - [Universal Online Judge](https://uoj.ac/)：始于 2014 年，Universal 取通用之意，[项目开源](https://github.com/UniversalOJ/UOJ-System)；[VFK](https://github.com/vfleaking) 的 OJ：多原创比赛题和 CCF/THU 题，难度较高。
 - [Vijos](https://vijos.org/)：始于 2005 年。[服务端](https://github.com/vijos/vj4) 和 [评测机](https://github.com/vijos/jd4) 等项目开源。
+- [WZOI](https://wzoi.cc)：始于 2017 年，由浙江省温州中学维护的 [开源](https://github.com/massimodong/wzoj) 评测系统。
 - [ZOJ](https://zoj.pintia.cn/home)：浙江大学在线评测系统，始于 2001 年。
 
 ### 国外
@@ -46,7 +47,7 @@ author: Suyun514, ChungZH, Enter-tainer, StudyingFather, Konano, JulieSigtuna, G
 - [ICPC Live Archive](https://icpcarchive.ecs.baylor.edu/) 存档了 1990 年至今的 ICPC 区域赛和总决赛题目；但部分比赛的评测数据仅为样例数据，且对 Special Judge 的支持不完善。
 - [ICPC Problem Archive](https://judge.icpc.global) 基于 Kattis 系统；存档了 2012 年至今的 ICPC 全球总决赛题目，并且会在总决赛开赛时同步发放题目（但不会有同步赛）。
 - [Kattis](https://open.kattis.com/) 题库主要包含类似 ICPC 比赛的题目；根据用户解题情况评定用户等级，推荐适合该用户水平的 trivial/easy/medium/hard 四类难度的题目，其中题目难度采用类 [ELO 等级分](https://zh.wikipedia.org/wiki/%E7%AD%89%E7%BA%A7%E5%88%86) 系统来评估。
-- [LeetCode](https://leetcode.com/) 码农面试刷题网站，有中文分站：[LeetCode China](https://leetcode-cn.com/)。
+- [LeetCode](https://leetcode.com/) 码农面试刷题网站，有中文分站：[LeetCode China](https://leetcode.cn)。
 - [Light OJ](http://lightoj.com) 一个快挂了的 OJ，`www` 域名无法访问，请使用 [根域名](http://lightoj.com) 访问
 - [opentrains](http://opentrains.snarknews.info/) 俄罗斯 [Open Cup](http://opencup.ru/) 比赛的训练平台，基于 [ejudge](https://ejudge.ru/) 开源系统搭建，支持虚拟比赛；题库包含历年 Open Cup 赛题以及 Petrozavodsk 训练营的题目。
 - [SPOJ](http://www.spoj.com) 始于 2003 年，其后台系统 [Sphere Engine](https://sphere-engine.com/) 于 2008 年商业化；支持题目点赞和标签功能。
@@ -115,13 +116,12 @@ author: Suyun514, ChungZH, Enter-tainer, StudyingFather, Konano, JulieSigtuna, G
     英文版原名*Concrete Mathematics*
 -   《组合数学》第五版 - Richard A.Brualdi  
     英文版原名*Introductory Combinatorics*
-- [Competitive Programmer's Handbook](https://cses.fi/book/index.html)
 -   《挑战程序设计竞赛》全套 - 秋叶拓哉，岩田阳一，北川宜稔
     通俗易懂。
     - [译者博客的介绍页](http://blog.watashi.ws/2382/pccb-etc/)
 -   《算法概论》- Sanjoy Dasgupta/Christos Papadimitriou/Umesh Vazirani
     - 提纲挚领，但内容较少。
-- [Legend-K 的数据结构与算法的笔记](http://www.legend-k.com/Algorithm/Algorithm.pdf)
+- [Legend-K 的数据结构与算法的笔记](http://web.archive.org/web/20180826111306/http://www.legend-k.com/Algorithm/Algorithm.pdf)
 - [acm-cheat-sheet](https://github.com/soulmachine/acm-cheat-sheet)
 -   [Competitive Programmer’s Handbook](https://cses.fi/book/book.pdf)- Antti Laaksonen
     - 作者花了三年个人时间完成。面向算法竞赛，覆盖面广，详略得当。
@@ -172,17 +172,20 @@ author: Suyun514, ChungZH, Enter-tainer, StudyingFather, Konano, JulieSigtuna, G
 - [Algorithm Visualizer](http://algorithm-visualizer.org)
 - [cppreference](https://zh.cppreference.com/w/)：一个全面的 C 和 C++ 语言及其标准库的在线参考资料
 - [Compiler Explorer](https://godbolt.org)：在线查看编译后代码块对应的汇编语句，支持选择不同的编译器
+- [C++ Insights](https://cppinsights.io/)：以编译器的视角去查看你的 C++ 源码
 - [Inverse Symbolic Calculator](http://wayback.cecm.sfu.ca/projects/ISC/ISCmain.html)：实数反查表达式，适用于反推常数
 - [$\rm\LaTeX$ 手写符号识别](http://detexify.kirelabs.org/classify.html)
 - [$\rm\LaTeX$ 数学公式参考](http://www.mohu.org/info/symbols/symbols.htm)
 - [Mathpix](https://mathpix.com/)：截图转 $\rm\LaTeX{}$
 - [OEIS](https://oeis.org)：整数数列搜索引擎
+- [Python Tutor](https://pythontutor.com/): 代码执行过程可视化
 - [Quick C++ Benchmark](https://quick-bench.com/)：在线比较两个及以上函数的运行速度
 - [Try It Online](https://tio.run)：在线运行 600+ 种语言的代码，支持 IO 交互，超时 60s，可以分享代码
 - [图论画板](https://csacademy.com/app/graph_editor/) 与 [GraphViz](http://www.graphviz.org/)
 - [Ubuntu Pastebin](https://paste.ubuntu.com)：可用于分享代码
 - [uDebug](https://www.udebug.com)：提供一些 OJ 题目的调试辅助
 - [USF](https://www.cs.usfca.edu/~galles/visualization/) 与 [VisuAlgo](https://visualgo.net/zh)：算法可视化
+- [Wandbox](https://wandbox.org/): 在线代码运行，支持 30+ 种语言，可以分享代码，支持不同编译器版本
 - [Wolfram Alpha](https://www.wolframalpha.com/)：可以计算包括数学、科学技术、社会文化……等多个主题的问题
 
 ## 题集和资源

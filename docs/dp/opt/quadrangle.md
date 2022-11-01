@@ -1,4 +1,4 @@
-author: Marcythm, zyf0726, hsfzLZH1, MingqiHuang, Ir1d, greyqz, billchenchina, Chrogeek, StudyingFather
+author: Marcythm, zyf0726, hsfzLZH1, MingqiHuang, Ir1d, greyqz, billchenchina, Chrogeek, StudyingFather, NFLSCode
 
 ## 区间类（2D1D）动态规划中的应用
 
@@ -176,17 +176,17 @@ $$
                 k += 1
     ```
 
-### 另一种常见的形式
+### 基于分治的决策单调性优化
 
-某些 dp 问题有着如下的形式：
+某些 dp 问题形式如下：
 
 $$
 f_{i,j} = \min_{k \leq j}\{f_{i-1,k}\} + w(k,j)\qquad\left(1 \leq i \leq n,1 \leq j \leq m\right)
 $$
 
-总共有 $n \times m$ 个状态，每个状态要有 $m$ 次转换，上述 dp 问题的时间复杂度就是 $O(n m^2)$。
+总共有 $n \times m$ 个状态，每个状态有 $O(m)$ 个决策，上述 dp 问题的时间复杂度就是 $O(n m^2)$。
 
-> 实际上此形式也有同样的结论，可以在 $O(n m)$ 复杂度解决，读者可以模仿 2D1D 类似的给出证明。
+> 实际上此形式也有同样的结论，可以在 $O((n+m)m)$ 复杂度解决（且 **只需要满足四边形不等式即可**），读者可以模仿 2D1D 类似的给出证明。
 
 令 $opt(i, j)$ 为使上述表达式最小化的 $k$ 的值。如果对于所有的 $i, j$ 都有 $opt(i, j) \leq opt(i, j + 1)$，那么我们就可以用分治法来优化 dp 问题。
 
@@ -199,6 +199,7 @@ $$
     int n;
     long long C(int i, int j);
     vector<long long> dp_before(n), dp_cur(n);
+    
     // compute dp_cur[l], ... dp_cur[r] (inclusive)
     void compute(int l, int r, int optl, int optr) {
       if (l > r) return;

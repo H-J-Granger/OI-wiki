@@ -1,6 +1,6 @@
-author: abc1763613206, cesonic, Ir1d, MingqiHuang
+author: abc1763613206, cesonic, Ir1d, MingqiHuang, xinchengo
 
-### 引入
+## 引入
 
 启发式算法是什么呢？
 
@@ -25,7 +25,7 @@ void merge(int x, int y) {
 
 让高度小的树成为高度较大的树的子树，这个优化可以称为启发式合并算法。
 
-### 算法内容
+## 算法内容
 
 树上启发式合并（dsu on tree）对于某些树上离线问题可以速度大于等于大部分算法且更易于理解和实现的算法。
 
@@ -43,6 +43,8 @@ void merge(int x, int y) {
 树上莫队！
 
 不行，莫队带根号，我要 log
+
+## 过程
 
 既然支持离线，考虑预处理后 $O(1)$ 输出答案。
 
@@ -74,7 +76,7 @@ void merge(int x, int y) {
 
 注意除了重儿子，每次遍历完 cnt 要清零。
 
-### 复杂度
+## 证明
 
 （对于不关心复杂度证明的，可以跳过不看）
 
@@ -82,13 +84,15 @@ void merge(int x, int y) {
 
 根节点到树上任意节点的轻边数不超过 $\log n$ 条。我们设根到该节点有 x 条轻边该节点的子树大小为 $y$，显然轻边连接的子节点的子树大小小于父亲的一半（若大于一半就不是轻边了），则 $y<n/2^x$，显然 $n>2^x$，所以 $x<\log n$。
 
-又因为如果一个节点是其父亲的重儿子，则他的子树必定在他的兄弟之中最多，所以任意节点到根的路径上所有重边连接的父节点在计算答案是必定不会遍历到这个节点，所以一个节点的被遍历的次数等于他到根节点路径上的轻边树 $+1$（之所以要 $+1$ 是因为他本身要被遍历到），所以一个节点的被遍历次数 $=\log n+1$, 总时间复杂度则为 $O(n(\log n+1))=O(n\log n)$，输出答案花费 $O(m)$.
+又因为如果一个节点是其父亲的重儿子，则它的子树必定在它的兄弟之中最多，所以任意节点到根的路径上所有重边连接的父节点在计算答案是必定不会遍历到这个节点，所以一个节点的被遍历的次数等于它到根节点路径上的轻边树 $+1$（之所以要 $+1$ 是因为它本身要被遍历到），所以一个节点的被遍历次数 $=\log n+1$, 总时间复杂度则为 $O(n(\log n+1))=O(n\log n)$，输出答案花费 $O(m)$.
 
 ![dsu-on-tree-3.png](./images/dsu-on-tree-3.svg)
 
 *图中标粗的即为重边，重边连向的子节点为重儿子*
 
-???+note "代码实现"
+## 实现
+
+???+note "实现"
     ```cpp
     #include <bits/stdc++.h>
     using namespace std;
@@ -116,10 +120,12 @@ void merge(int x, int y) {
       if (cnt[col[u]] == 0) ++totColor;
       cnt[col[u]]++;
     }
+    
     void del(int u) {
       cnt[col[u]]--;
       if (cnt[col[u]] == 0) --totColor;
     }
+    
     int getAns() { return totColor; }
     
     void dfs0(int u, int p) {
@@ -177,7 +183,7 @@ void merge(int x, int y) {
     }
     ```
 
-### 运用
+## 运用
 
 1.  某些出题人设置的正解是 dsu on tree 的题
 
@@ -185,13 +191,13 @@ void merge(int x, int y) {
 
     因为是排列后成为回文串，所以一个字符出现了两次相当于没出现，也就是说，这条路径满足 **最多有一个字符出现奇数次**。
 
-    正常做法是对每一个节点 dfs，每到一个节点就强行枚举所有字母找到和他异或后结果为 1 的个数大于 1 的路径，再取最长值，这样是 $O(n^2\log n)$ 的，可以用 dsu on tree 优化到 $O(n\log^2n)$。关于具体做法，可以参考下面的扩展阅读
+    正常做法是对每一个节点 dfs，每到一个节点就强行枚举所有字母找到和它异或后结果为 1 的个数大于 1 的路径，再取最长值，这样是 $O(n^2\log n)$ 的，可以用 dsu on tree 优化到 $O(n\log^2n)$。关于具体做法，可以参考下面的扩展阅读
 
 2.  可以用 dsu 乱搞的题
 
     可以水一些树套树的部分分（没有修改操作），还可以把树上莫队的 $O(n\sqrt{m})$ 吊着打
 
-### 练习题
+## 练习题
 
 [CF600E Lomsat gelral](http://codeforces.com/problemset/problem/600/E)
 
@@ -199,7 +205,9 @@ void merge(int x, int y) {
 
 [UOJ284 快乐游戏鸡](https://uoj.ac/problem/284)
 
-### 参考资料/扩展阅读
+[CF1709E XOR Tree](https://codeforces.com/contest/1709/problem/E)
+
+## 参考资料/扩展阅读
 
 [CF741D 作者介绍的 dsu on tree](http://codeforces.com/blog/entry/44351)
 

@@ -134,7 +134,7 @@ std::partial_sort(first, mid, last, cmp);
 
 原理：
 
-`std::partial_sort` 的思想是：对原始容器内区间为 `[first, mid)` 的元素执行 `make_heap()` 操作，构造一个大根堆，然后将 `[mid, last)` 中的每个元素和 `first` 进行比较，保证 `first` 内的元素为堆内的最大值。如果小于该最大值，则互换元素位置，并对 `[first, mid)` 内的元素进行调整，使其保持最大堆序。比较完之后，再对 `[first, mid)` 内的元素做一次对排序 `sort_heap()` 操作，使其按增序排列。注意，堆序和增序是不同的。
+`std::partial_sort` 的思想是：对原始容器内区间为 `[first, mid)` 的元素执行 `make_heap()` 操作，构造一个大根堆，然后将 `[mid, last)` 中的每个元素和 `first` 进行比较，保证 `first` 内的元素为堆内的最大值。如果小于该最大值，则互换元素位置，并对 `[first, mid)` 内的元素进行调整，使其保持最大堆序。比较完之后，再对 `[first, mid)` 内的元素做一次堆排序 `sort_heap()` 操作，使其按增序排列。注意，堆序和增序是不同的。
 
 ## 自定义比较
 
@@ -156,6 +156,7 @@ std::sort(a + 1, a + 1 + n, greater<int>());  // 从大到小排序
 ```cpp
 struct data {
   int a, b;
+
   bool operator<(const data rhs) const {
     return (a == rhs.a) ? (b < rhs.b) : (a < rhs.a);
   }
@@ -164,6 +165,7 @@ struct data {
 bool cmp(const data u1, const data u2) {
   return (u1.a == u2.a) ? (u1.b > u2.b) : (u1.a > u2.a);
 }
+
 // ...
 std::sort(da + 1, da + 1 + 10);  // 使用结构体中定义的 < 运算符，从小到大排序
 std::sort(da + 1, da + 1 + 10, cmp);  // 使用 cmp 函数进行比较，从大到小排序

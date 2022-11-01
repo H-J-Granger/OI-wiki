@@ -1,8 +1,10 @@
-## 前言
-
 > 太长不看版：结尾自取模板……
 
+## 定义
+
 高精度计算（Arbitrary-Precision Arithmetic），也被称作大整数（bignum）计算，运用了一些算法结构来支持更大整数间的运算（数字大小超过语言内建整型）。
+
+## 引入
 
 高精度问题包含很多小的细节，实现上也有很多讲究。
 
@@ -555,6 +557,8 @@ void div(int a[], int b[], int c[], int d[]) {
 
 ## 压位高精度
 
+### 引入
+
 在一般的高精度加法，减法，乘法运算中，我们都是将参与运算的数拆分成一个个单独的数码进行运算。
 
 例如计算 $8192\times 42$ 时，如果按照高精度乘高精度的计算方式，我们实际上算的是 $(8000+100+90+2)\times(40+2)$。
@@ -564,6 +568,8 @@ void div(int a[], int b[], int c[], int d[]) {
 有没有办法作出一些优化呢？
 
 注意到拆分数字的方式并不影响最终的结果，因此我们可以将若干个数码进行合并。
+
+### 过程
 
 还是以上面这个例子为例，如果我们每两位拆分一个数，我们可以拆分成 $(8100+92)\times 42$。
 
@@ -577,14 +583,14 @@ void div(int a[], int b[], int c[], int d[]) {
 
 ??? note "压位高精度加法参考实现"
     ```cpp
-    //这里的 a,b,c 数组均为 p 进制下的数
-    //最终输出答案时需要将数字转为十进制
+    // 这里的 a,b,c 数组均为 p 进制下的数
+    // 最终输出答案时需要将数字转为十进制
     void add(int a[], int b[], int c[]) {
       clear(c);
     
       for (int i = 0; i < LEN - 1; ++i) {
         c[i] += a[i] + b[i];
-        if (c[i] >= p) {  //在普通高精度运算下，p=10
+        if (c[i] >= p) {  // 在普通高精度运算下，p=10
           c[i + 1] += 1;
           c[i] -= p;
         }
@@ -608,18 +614,18 @@ void div(int a[], int b[], int c[], int d[]) {
 
 ??? note "压位高精度高效竖式除法参考实现"
     ```cpp
-    //完整模板和实现 https://baobaobear.github.io/post/20210228-bigint1/
-    //对b乘以mul再左移offset的结果相减，为除法服务
+    // 完整模板和实现 https://baobaobear.github.io/post/20210228-bigint1/
+    // 对b乘以mul再左移offset的结果相减，为除法服务
     BigIntSimple &sub_mul(const BigIntSimple &b, int mul, int offset) {
       if (mul == 0) return *this;
       int borrow = 0;
-      //与减法不同的是，borrow可能很大，不能使用减法的写法
+      // 与减法不同的是，borrow可能很大，不能使用减法的写法
       for (size_t i = 0; i < b.v.size(); ++i) {
         borrow += v[i + offset] - b.v[i] * mul - BIGINT_BASE + 1;
         v[i + offset] = borrow % BIGINT_BASE + BIGINT_BASE - 1;
         borrow /= BIGINT_BASE;
       }
-      //如果还有借位就继续处理
+      // 如果还有借位就继续处理
       for (size_t i = b.v.size(); borrow; ++i) {
         borrow += v[i + offset] - BIGINT_BASE + 1;
         v[i + offset] = borrow % BIGINT_BASE + BIGINT_BASE - 1;
@@ -627,18 +633,19 @@ void div(int a[], int b[], int c[], int d[]) {
       }
       return *this;
     }
+    
     BigIntSimple div_mod(const BigIntSimple &b, BigIntSimple &r) const {
       BigIntSimple d;
       r = *this;
       if (absless(b)) return d;
       d.v.resize(v.size() - b.v.size() + 1);
-      //提前算好除数的最高三位+1的倒数，若最高三位是a3,a2,a1
-      //那么db是a3+a2/base+(a1+1)/base^2的倒数，最后用乘法估商的每一位
-      //此法在BIGINT_BASE<=32768时可在int32范围内用
-      //但即使使用int64，那么也只有BIGINT_BASE<=131072时可用（受double的精度限制）
-      //能保证估计结果q'与实际结果q的关系满足q'<=q<=q'+1
-      //所以每一位的试商平均只需要一次，只要后面再统一处理进位即可
-      //如果要使用更大的base，那么需要更换其它试商方案
+      // 提前算好除数的最高三位+1的倒数，若最高三位是a3,a2,a1
+      // 那么db是a3+a2/base+(a1+1)/base^2的倒数，最后用乘法估商的每一位
+      // 此法在BIGINT_BASE<=32768时可在int32范围内用
+      // 但即使使用int64，那么也只有BIGINT_BASE<=131072时可用（受double的精度限制）
+      // 能保证估计结果q'与实际结果q的关系满足q'<=q<=q'+1
+      // 所以每一位的试商平均只需要一次，只要后面再统一处理进位即可
+      // 如果要使用更大的base，那么需要更换其它试商方案
       double t = (b.get((unsigned)b.v.size() - 2) +
                   (b.get((unsigned)b.v.size() - 3) + 1.0) / BIGINT_BASE);
       double db = 1.0 / (b.v.back() + t / BIGINT_BASE);
@@ -647,17 +654,17 @@ void div(int a[], int b[], int c[], int d[]) {
         int m = std::max((int)(db * rm), r.get(i + 1));
         r.sub_mul(b, m, j);
         d.v[j] += m;
-        if (!r.get(i + 1))  //检查最高位是否已为0，避免极端情况
+        if (!r.get(i + 1))  // 检查最高位是否已为0，避免极端情况
           --i, --j;
       }
       r.trim();
-      //修正结果的个位
+      // 修正结果的个位
       int carry = 0;
       while (!r.absless(b)) {
         r.subtract(b);
         ++carry;
       }
-      //修正每一位的进位
+      // 修正每一位的进位
       for (size_t i = 0; i < d.v.size(); ++i) {
         carry += d.v[i];
         d.v[i] = carry % BIGINT_BASE;
@@ -768,7 +775,7 @@ $$
     ```
 
 ??? " 关于 `new` 和 `delete` "
-    见 [内存池](../contest/common-tricks.md#_5)。
+    见 [内存池](../contest/common-tricks.md#内存池)。
 
 但是这样的实现存在一个问题：在 $b$ 进制下，多项式的每一个系数都有可能达到 $n \cdot b^2$ 量级，在压位高精度实现中可能造成整数溢出；而若在多项式乘法的过程中处理进位问题，则 $x_1 + x_0$ 与 $y_1 + y_0$ 的结果可能达到 $2 \cdot b^m$，增加一个位（如果采用 $x_1 - x_0$ 的计算方式，则不得不特殊处理负数的情况）。因此，需要依照实际的应用场景来决定采用何种实现方式。
 
@@ -787,15 +794,18 @@ $$
     #define MAXSIZE 10024
     // MAXSIZE 是位数
     #define DLEN 4
+    
     // DLEN 记录压几位
     struct Big {
       int a[MAXSIZE], len;
       bool flag;  // 标记符号'-'
+    
       Big() {
         len = 1;
         memset(a, 0, sizeof a);
         flag = 0;
       }
+    
       Big(const int);
       Big(const char*);
       Big(const Big&);
@@ -816,6 +826,7 @@ $$
       bool operator<(const int& t) const;
       inline void print() const;
     };
+    
     Big::Big(const int b) {
       int c, d = b;
       len = 0;
@@ -828,6 +839,7 @@ $$
       }
       a[len++] = d;
     }
+    
     Big::Big(const char* s) {
       int t, k, index, l;
       CLR(a);
@@ -843,17 +855,20 @@ $$
         a[index++] = t;
       }
     }
+    
     Big::Big(const Big& T) : len(T.len) {
       CLR(a);
       f(i, 0, len) a[i] = T.a[i];
       // TODO:重载此处？
     }
+    
     Big& Big::operator=(const Big& T) {
       CLR(a);
       len = T.len;
       f(i, 0, len) a[i] = T.a[i];
       return *this;
     }
+    
     Big Big::operator+(const Big& T) const {
       Big t(*this);
       int big = len;
@@ -871,6 +886,7 @@ $$
         t.len = big;
       return t;
     }
+    
     Big Big::operator-(const Big& T) const {
       int big;
       bool ctf;
@@ -905,6 +921,7 @@ $$
       if (ctf) t1.a[big - 1] = -t1.a[big - 1];
       return t1;
     }
+    
     Big Big::operator*(const Big& T) const {
       Big res;
       int up;
@@ -928,6 +945,7 @@ $$
       while (res.len > 1 && res.a[res.len - 1] == 0) --res.len;
       return res;
     }
+    
     Big Big::operator/(const int& b) const {
       Big res;
       int down = 0;
@@ -939,11 +957,13 @@ $$
       while (res.len > 1 && res.a[res.len - 1] == 0) --res.len;
       return res;
     }
+    
     int Big::operator%(const int& b) const {
       int d = 0;
       gd(i, len - 1, 0) d = (d * (MAXN + 1) % b + a[i]) % b;
       return d;
     }
+    
     Big Big::operator^(const int& n) const {
       Big t(n), res(1);
       int y = n;
@@ -954,6 +974,7 @@ $$
       }
       return res;
     }
+    
     bool Big::operator<(const Big& T) const {
       int ln;
       if (len < T.len) return 233;
@@ -965,10 +986,12 @@ $$
       }
       return 0;
     }
+    
     inline bool Big::operator<(const int& t) const {
       Big tee(t);
       return *this < tee;
     }
+    
     inline void Big::print() const {
       printf("%d", a[len - 1]);
       gd(i, len - 2, 0) { printf("%04d", a[i]); }
@@ -979,6 +1002,7 @@ $$
       printf("%d", s.a[len - 1]);
       gd(i, len - 2, 0) { printf("%04d", s.a[i]); }
     }
+    
     char s[100024];
     ```
 
