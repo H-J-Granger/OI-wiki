@@ -109,6 +109,7 @@ void dfs1(int o) {
       if (son[o] == -1 || siz[p[j]] > siz[son[o]]) son[o] = p[j];
     }
 }
+
 void dfs2(int o, int t) {
   top[o] = t;
   cnt++;
@@ -475,13 +476,13 @@ DP 数组的长度我们可以根据子树最深节点算出。
 
 首先我们假设我们已经预处理了每一个节点的 $2^i$ 级祖先。
 
-现在我们假设我们找到了询问节点的 $2^i$ 级祖先满足 $2^i < k < 2^{i+1}$。
+现在我们假设我们找到了询问节点的 $2^i$ 级祖先满足 $2^i \le k < 2^{i+1}$。
 
 我们考虑求出其所在重链的节点并且按照深度列入表格。假设重链长度为 $d$。
 
 同时我们在预处理的时候找到每条重链的根节点的 $1$ 到 $d$ 级祖先，同样放入表格。
 
-根据长链剖分的性质，$k-2^i < 2^i \leq d$, 也就是说，我们可以 $O(1)$ 在这条长链的表格上求出的这个节点的 $k$ 级祖先。
+根据长链剖分的性质，$k-2^i \le 2^i \leq d$, 也就是说，我们可以 $O(1)$ 在这条重链的表格上求出的这个节点的 $k$ 级祖先。
 
 预处理需要倍增出 $2^i$ 次级祖先，同时需要预处理每条重链对应的表格。
 
@@ -501,8 +502,8 @@ DP 数组的长度我们可以根据子树最深节点算出。
 
 [「SDOI2011」染色](https://www.luogu.com.cn/problem/P2486)
 
-[「SDOI2014」旅行](https://www.lydsy.com/JudgeOnline/problem.php?id=3531)
+[「SDOI2014」旅行](https://hydro.ac/d/bzoj/p/3531)
 
-[「POI2014」Hotel 加强版](https://www.lydsy.com/JudgeOnline/problem.php?id=4543)（长链剖分优化 DP)
+[「POI2014」Hotel 加强版](https://hydro.ac/d/bzoj/p/4543)（长链剖分优化 DP)
 
-[攻略](https://www.lydsy.com/JudgeOnline/problem.php?id=3252)（长链剖分优化贪心）
+[攻略](https://hydro.ac/d/bzoj/p/3252)（长链剖分优化贪心）

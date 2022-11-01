@@ -1,6 +1,10 @@
 author: sshwy, FFjet
 
-类欧几里德算法由洪华敦在 2016 年冬令营营员交流中提出的内容，其本质可以理解为，使用一个类似辗转相除法来做函数求和的过程。
+## 定义
+
+类欧几里德算法是洪华敦在 2016 年冬令营营员交流中提出的内容。
+
+其本质可以理解为，使用一个类似辗转相除法的方法来进行函数求和。
 
 ## 引入
 
@@ -177,6 +181,8 @@ $$
 
 在代码实现的时侯，因为 $3$ 个函数各有交错递归，因此可以考虑三个一起整体递归，同步计算，否则有很多项会被多次计算。这样实现的复杂度是 $O(\log n)$ 的。
 
+## 实现
+
 ??? note "[模板题代码实现](https://www.luogu.com.cn/problem/P5170)"
     ```cpp
     #include <bits/stdc++.h>
@@ -184,10 +190,13 @@ $$
     using namespace std;
     const int P = 998244353;
     int i2 = 499122177, i6 = 166374059;
+    
     struct data {
       data() { f = g = h = 0; }
+    
       int f, g, h;
     };  // 三个函数打包
+    
     data calc(int n, int a, int b, int c) {
       int ac = a / c, bc = b / c, m = (a * n + b) / c, n1 = n + 1, n21 = n * 2 + 1;
       data d;
@@ -218,7 +227,9 @@ $$
       d.h = (d.h % P + P) % P;
       return d;
     }
+    
     int T, n, a, b, c;
+    
     signed main() {
       scanf("%lld", &T);
       while (T--) {

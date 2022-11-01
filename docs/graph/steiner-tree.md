@@ -26,7 +26,7 @@
 
 对于形式一，如果令关键点为 $\{1,2,3,4\}$，可以发现若直接将这四个关键点相连的最小边权和是 12，显然这不是最优的。如果考虑使用 5 号节点那么最小边权和就会是 9，得到一个更优的答案。
 
-对于形式二，如果令关键点为 $\{1,2,3,4\}$，可以发现这四个关键点中的一些点甚至没有直接相连的边，必须考虑使用复接点（斯坦纳点）。这时将 5 号与 6 号都考虑进去可以得到最小边权和 11。
+对于形式二，如果令关键点为 $\{1,2,3,4\}$，可以发现这四个关键点中的一些点甚至没有直接相连的边，必须考虑使用复接点（斯坦纳点）。这时将 5 号考虑进去可以得到最小边权和 9。
 
 并且我们可以发现在两张图中 1 号和 4 号的斯坦纳点是退化的，被 1 号或 4 号代替了。
 
@@ -48,7 +48,7 @@
 
 ??? note "参考实现"
     ```cpp
-      --8<-- "docs/graph/code/steiner-tree/steiner-tree_1.cpp"
+    --8<-- "docs/graph/code/steiner-tree/steiner-tree_1.cpp"
     ```
 
 另外一道经典例题 [\[WC2008\]游览计划](https://www.luogu.com.cn/problem/P4294)。
@@ -67,15 +67,12 @@
 
 ??? note "参考实现"
     ```cpp
-      --8<-- "docs/graph/code/steiner-tree/steiner-tree_2.cpp"
+    --8<-- "docs/graph/code/steiner-tree/steiner-tree_2.cpp"
     ```
 
 ## 习题
 
-[【模板】最小斯坦纳树](https://www.luogu.com.cn/problem/P6192)
-
-[\[WC2008\]游览计划](https://www.luogu.com.cn/problem/P4294)
-
-[\[JLOI2015\]管道连接](https://loj.ac/problem/2110)
-
-[\[APIO2013\]机器人](https://www.luogu.com.cn/problem/P3638)
+- [【模板】最小斯坦纳树](https://www.luogu.com.cn/problem/P6192)
+- [\[WC2008\]游览计划](https://www.luogu.com.cn/problem/P4294)
+- [\[JLOI2015\]管道连接](https://loj.ac/problem/2110)
+- [\[APIO2013\]机器人](https://www.luogu.com.cn/problem/P3638)

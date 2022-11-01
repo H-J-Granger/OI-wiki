@@ -1,4 +1,4 @@
-## 简介
+## 引入
 
 扫描线一般运用在图形上面，它和它的字面意思十分相似，就是一条线在整个图上扫来扫去，它一般被用来解决图形面积，周长等问题。
 
@@ -12,7 +12,7 @@
 
 根据图片可知总面积可以直接暴力即可求出面积，如果数据大了怎么办？这时就需要讲到 **扫描线** 算法。
 
-### 流程
+### 过程
 
 现在假设我们有一根线，从下往上开始扫描：
 
@@ -22,6 +22,8 @@
 - 我们的线段树就是为了维护矩形的长，我们给每一个矩形的上下边进行标记，下面的边标记为 1，上面的边标记为 -1，每遇到一个矩形时，我们知道了标记为 1 的边，我们就加进来这一条矩形的长，等到扫描到 -1 时，证明这一条边需要删除，就删去，利用 1 和 -1 可以轻松的到这种状态。
 - 还要注意这里的线段树指的并不是线段的一个端点，而指的是一个区间，所以我们要计算的是 $r+1$ 和 $r-1$。
 - 需要 [离散化](../misc/discrete.md)。
+
+### 实现
 
 ???+note "代码实现"
     ```cpp
@@ -44,10 +46,10 @@
       int flag;
     } p[maxn << 3];  // 坐标
     
-    //定义sort比较
+    // 定义sort比较
     bool cmp(node2 a, node2 b) { return a.x < b.x; }
     
-    //上传
+    // 上传
     void pushup(int rt) {
       if (lazy[rt] > 0)
         cl[rt].sum = cl[rt].r - cl[rt].l;
@@ -55,7 +57,7 @@
         cl[rt].sum = cl[rt * 2].sum + cl[rt * 2 + 1].sum;
     }
     
-    //建树
+    // 建树
     void build(int rt, int l, int r) {
       if (r - l > 1) {
         cl[rt].l = s[l];
@@ -71,7 +73,7 @@
       return;
     }
     
-    //更新
+    // 更新
     void update(int rt, double y1, double y2, int flag) {
       if (cl[rt].l == y1 && cl[rt].r == y2) {
         lazy[rt] += flag;
@@ -120,11 +122,11 @@
 
 ## 练习
 
-- [「HDU1542」Atlantis](https://vjudge.net/problem/HDU-1542)
+- [「POJ1151」Atlantis](http://poj.org/problem?id=1151)
 
-- [「HDU1828」Picture](https://vjudge.net/problem/HDU-1828)
+- [「POJ1177」Picture](http://poj.org/problem?id=1177)
 
-- [「HDU3265」Posters](https://vjudge.net/problem/HDU-3265)
+- [「POJ3832」Posters](http://poj.org/problem?id=3832)
 
 ## 参考资料
 

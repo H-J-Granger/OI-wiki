@@ -6,9 +6,9 @@
 
 我们自然地会想到，如何用计算机来判断一个数是不是素数呢？
 
-### 暴力做法
+### 实现
 
-自然可以枚举从小到大的每个数看是否能整除
+暴力做法自然可以枚举从小到大的每个数看是否能整除
 
 ```cpp
 // C++ Version
@@ -62,12 +62,14 @@ def isPrime(a):
 
 ### 素性测试
 
+#### 定义
+
 **素性测试**(Primality test）是一类在 **不对给定数字进行素数分解**（prime factorization）的情况下，测试其是否为素数的算法。
 
 素性测试有两种：
 
 1. 确定性测试：绝对确定一个数是否为素数。常见示例包括 Lucas-Lehmer 测试和椭圆曲线素性证明。
-2. 概率性测试：通常比确定性测试快很多，但有可能（尽管概率很小）错误地将 [合数](../number-theory/basic.md#_6) 识别为质数（尽管反之则不会）。因此，通过概率素性测试的数字被称为 **可能素数**，直到它们的素数可以被确定性地证明。而通过测试但实际上是合数的数字则被称为 **伪素数**。有许多特定类型的伪素数，最常见的是费马伪素数，它们是满足费马小定理的合数。概率性测试的常见示例包括 Miller–Rabin 测试。
+2. 概率性测试：通常比确定性测试快很多，但有可能（尽管概率很小）错误地将 [合数](../number-theory/basic.md#素数与合数) 识别为质数（尽管反之则不会）。因此，通过概率素性测试的数字被称为 **可能素数**，直到它们的素数可以被确定性地证明。而通过测试但实际上是合数的数字则被称为 **伪素数**。有许多特定类型的伪素数，最常见的是费马伪素数，它们是满足费马小定理的合数。概率性测试的常见示例包括 Miller–Rabin 测试。
 
 接下来我们将着重介绍几个概率性素性测试：
 
@@ -75,9 +77,11 @@ def isPrime(a):
 
 **Fermat 素性检验** 是最简单的概率性素性检验。
 
-我们可以根据 [费马小定理](./fermat.md#_1) 得出一种检验素数的思路：
+我们可以根据 [费马小定理](./fermat.md#费马小定理) 得出一种检验素数的思路：
 
 基本思想是不断地选取在 $[2, n-1]$ 中的基 $a$，并检验是否每次都有 $a^{n-1} \equiv 1 \pmod n$
+
+##### 实现
 
 ```cpp
 // C++ Version
@@ -126,6 +130,8 @@ def millerRabin(n):
 **Miller-Rabin 素性测试**（Miller–Rabin primality test）是进阶的素数判定方法。它是由 Miller 和 Rabin 二人根据费马小定理的逆定理（费马测试）优化得到的。因为和许多类似算法一样，它是使用伪素数的概率性测试，我们必须使用慢得多的确定性算法来保证素性。然而，实际上没有已知的数字通过了高级概率性测试（例如 Rabin-Miller）但实际上却是复合的。因此我们可以放心使用。
 
 对数 n 进行 k 轮测试的时间复杂度是 $O(k \log^3n)$，利用 FFT 等技术可以优化到 [$O(k \log^2n \log \log n \log \log \log n)$](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test#Complexity)。
+
+另外，假设 [广义 Riemann 猜想](https://en.wikipedia.org/wiki/Generalized_Riemann_hypothesis)(generalized Riemann hypothesis, GRH) 成立，则对数 n 最多只需要测试 $[2, \min\{n-2, \lfloor 2\ln^2 n \rfloor\}]$ 中的全部整数即可 **确定** 数 n 的素性，证明参见注释 7。
 
 ##### 二次探测定理
 
@@ -193,16 +199,20 @@ def millerRabin(n):
 
 ## 反素数
 
+### 定义
+
 如果某个正整数 $n$ 满足如下条件，则称为是 **反素数**：
   任何小于 $n$ 的正数的约数个数都小于 $n$ 的约数个数
 
 注：注意区分 [emirp](https://en.wikipedia.org/wiki/Emirp)，它是用来表示从后向前写读是素数的数。
 
-### 简介
+### 引入
 
 其实顾名思义，素数就是因子只有两个的数，那么反素数，就是因子最多的数（并且因子个数相同的时候值最小），所以反素数是相对于一个集合来说的。
 
 我所理解的反素数定义就是，在一个集合中，因素最多并且值最小的数，就是反素数。
+
+### 过程
 
 那么，如何来求解反素数呢？
 
@@ -282,3 +292,4 @@ def millerRabin(n):
 4. [Primality test - Wikipedia](https://en.wikipedia.org/wiki/Primality_test)
 5. [桃子的算法笔记——反素数详解（acm/OI）](https://zhuanlan.zhihu.com/p/41759808)
 6. [The Rabin-Miller Primality Test](http://home.sandiego.edu/~dhoffoss/teaching/cryptography/10-Rabin-Miller.pdf)
+7. Bach, Eric , "[Explicit bounds for primality testing and related problems](https://doi.org/10.2307%2F2008811)", Mathematics of Computation, 55:191 (1990) pp 355–380.
