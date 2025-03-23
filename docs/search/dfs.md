@@ -6,30 +6,41 @@ DFS 为图论中的概念，详见 [DFS（图论）](../graph/dfs.md) 页面。�
 
 考虑这个例子：
 
-???+note "例题"
+???+ note "例题"
     把正整数 $n$ 分解为 $3$ 个不同的正整数，如 $6=1+2+3$，排在后面的数必须大于等于前面的数，输出所有方案。
 
 对于这个问题，如果不知道搜索，应该怎么办呢？
 
 当然是三重循环，参考代码如下：
 
-???+note "实现"
-    ```cpp
-    // C++ Version
-    for (int i = 1; i <= n; ++i)
-      for (int j = i; j <= n; ++j)
-        for (int k = j; k <= n; ++k)
-          if (i + j + k == n) printf("%d = %d + %d + %d\n", n, i, j, k);
-    ```
+???+ note "实现"
+    === "C++"
+        ```cpp
+        for (int i = 1; i <= n; ++i)
+          for (int j = i; j <= n; ++j)
+            for (int k = j; k <= n; ++k)
+              if (i + j + k == n) printf("%d = %d + %d + %d\n", n, i, j, k);
+        ```
     
-    ```python
-    # Python Version
-    for i in range(1, n + 1):
-        for j in range(i, n + 1):
-            for k in range(j, n + 1):
-                if i + j + k == n:
-                    print("%d = %d + %d + %d" % (n, i, j, k))
-    ```
+    === "Python"
+        ```python
+        for i in range(1, n + 1):
+            for j in range(i, n + 1):
+                for k in range(j, n + 1):
+                    if i + j + k == n:
+                        print("%d = %d + %d + %d" % (n, i, j, k))
+        ```
+    
+    === "Java"
+        ```Java
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = i; j < n + 1; j++) {
+                for (int k = j; k < n + 1; k++) {
+                    if (i + j + k == n) System.out.printf("%d = %d + %d + %d%n", n, i, j, k);
+                }
+            }
+        }
+        ```
 
 那如果是分解成四个整数呢？再加一重循环？
 
@@ -49,52 +60,77 @@ DFS 为图论中的概念，详见 [DFS（图论）](../graph/dfs.md) 页面。�
 
 代码如下：
 
-???+note "实现"
-    ```cpp
-    // C++ Version
-    int m, arr[103];  // arr 用于记录方案
-    
-    void dfs(int n, int i, int a) {
-      if (n == 0) {
-        for (int j = 1; j <= i - 1; ++j) printf("%d ", arr[j]);
-        printf("\n");
-      }
-      if (i <= m) {
-        for (int j = a; j <= n; ++j) {
-          arr[i] = j;
-          dfs(n - j, i + 1, j);  // 请仔细思考该行含义。
+???+ note "实现"
+    === "C++"
+        ```cpp
+        int m, arr[103];  // arr 用于记录方案
+        
+        void dfs(int n, int i, int a) {
+          if (n == 0) {
+            for (int j = 1; j <= i - 1; ++j) printf("%d ", arr[j]);
+            printf("\n");
+          }
+          if (i <= m) {
+            for (int j = a; j <= n; ++j) {
+              arr[i] = j;
+              dfs(n - j, i + 1, j);  // 请仔细思考该行含义。
+            }
+          }
         }
-      }
-    }
+        
+        // 主函数
+        scanf("%d%d", &n, &m);
+        dfs(n, 1, 1);
+        ```
     
-    // 主函数
-    scanf("%d%d", &n, &m);
-    dfs(n, 1, 1);
-    ```
+    === "Python"
+        ```python
+        arr = [0] * 103  # arr 用于记录方案
+        
+        
+        def dfs(n, i, a):
+            if n == 0:
+                print(arr[1:i])
+            if i <= m:
+                for j in range(a, n + 1):
+                    arr[i] = j
+                    dfs(n - j, i + 1, j)  # 请仔细思考该行含义。
+        
+        
+        # 主函数
+        n, m = map(int, input().split())
+        dfs(n, 1, 1)
+        ```
     
-    ```python
-    # Python Version
-    arr = [0] * 103  # arr 用于记录方案
-    
-    def dfs(n, i, a):
-        if n == 0:
-            print(arr[1:i])
-        if i <= m:
-            for j in range(a, n + 1):
-                arr[i] = j
-                dfs(n - j, i + 1, j)  # 请仔细思考该行含义。
-    
-    # 主函数
-    n, m = map(int, input().split())
-    dfs(n, 1, 1)
-    ```
+    === "Java"
+        ```Java
+        static int m;
+        
+        // arr 用于记录方案
+        static int[] arr = new int[103];
+        
+        public static void dfs(int n, int i, int a) {
+            if (n == 0) {
+                for (int j = 1; j <= i - 1; j++) System.out.printf("%d ", arr[j]);
+                System.out.println();
+            }
+            if (i <= m) {
+                for (int j = a; j <= n; ++j) {
+                    arr[i] = j;
+                    dfs(n - j, i + 1, j); // 请仔细思考该行含义。
+                }
+            }
+        }
+        
+        // 主函数
+        final int N = new Scanner(System.in).nextInt();
+        m = new Scanner(System.in).nextInt();
+        dfs(N, 1, 1);
+        ```
 
 ## 例题
 
-[Luogu P1706 全排列问题](https://www.luogu.com.cn/problem/P1706)
-
-C++ 代码：
-
-```cpp
---8<-- "docs/search/code/dfs/dfs_1.cpp"
-```
+???+ note "[Luogu P1706 全排列问题](https://www.luogu.com.cn/problem/P1706)"
+    ```cpp
+    --8<-- "docs/search/code/dfs/dfs_1.cpp"
+    ```

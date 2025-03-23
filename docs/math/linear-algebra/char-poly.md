@@ -1,6 +1,6 @@
 特征的这部分只研究方阵，即矩阵 $A$ 对应的线性变换将 $n$ 个向量映射到 $n$ 个向量。
 
-由于在实际问题中，经常要考虑连续进行重复的变换，如果只用“矩阵 $A$ 对应的线性变换将单位阵 $I$ 变换为 $A$”的描述，就会很抽象。此时最好的办法是找“不动点”，即变换当中不动的部分。
+由于在实际问题中，经常要考虑连续进行重复的变换，如果只用「矩阵 $A$ 对应的线性变换将单位阵 $I$ 变换为 $A$」的描述，就会很抽象。此时最好的办法是找「不动点」，即变换当中不动的部分。
 
 然而事实上，矩阵 $A$ 对应的线性变换很可能没有不动点，于是退而求其次，寻找共线或者类似于简单变形的部分。
 
@@ -95,9 +95,9 @@ $$
 
 分为以下步骤：
 
-- 计算行列式 $|\lambda I-A|$。
-- 求出多项式 $f(\lambda)=|\lambda I-A|$ 在域 $F$ 中的全部根，即 $A$ 的特征值。
-- 对 $A$ 的每个特征值 $\lambda$，解齐次线性方程组 $(\lambda I-A)X=0$，求出它的一组基础解系 $X_1,\cdots,X_t$，则 $A$ 的属于 $\lambda$ 的全部特征向量为：
+-   计算行列式 $|\lambda I-A|$。
+-   求出多项式 $f(\lambda)=|\lambda I-A|$ 在域 $F$ 中的全部根，即 $A$ 的特征值。
+-   对 $A$ 的每个特征值 $\lambda$，解齐次线性方程组 $(\lambda I-A)X=0$，求出它的一组基础解系 $X_1,\cdots,X_t$，则 $A$ 的属于 $\lambda$ 的全部特征向量为：
 
 $$
 k_1X_1+k_2X_2+\cdots+k_tX_t
@@ -105,7 +105,7 @@ $$
 
 该表达式中的 $k_i$ 不全为零。
 
-- 线性变换 $T$ 的属于 $\lambda$ 的特征向量为：
+-   线性变换 $T$ 的属于 $\lambda$ 的特征向量为：
 
 $$
 \xi_i=(\alpha_1,\cdots,\alpha_n)X_i
@@ -228,64 +228,13 @@ $$
 
 ### 使用高斯消元进行相似变换
 
-对 $n\times n$ 的矩阵 $B$ 进行高斯消元行变换的三个基本操作有
+对 $n\times n$ 的矩阵 $B$ 可以进行高斯消元，其基本操作为初等行变换。
 
-- 将 $B$ 的第 $i$，$j$ 行互换：$B\mapsto P_{ij}B$。
-- 将 $B$ 的第 $i$ 行乘 $k\neq 0$：$B\mapsto D_i(k)B$。
-- 将 $B$ 的第 $j$ 行的 $k$ 倍加到第 $i$ 行：$B\mapsto T_{ij}(k)B$。
+在对矩阵使用上述操作（左乘初等矩阵）后再右乘其逆矩阵即相似变换，左乘为行变换，易发现右乘即列变换。
 
-对于 $1\leq i\lt j\leq n$ 这几个 $n\times n$ 的初等矩阵分别为
+若能将矩阵通过相似变换变为上三角或下三角的形式，那么可以轻松求出其特征多项式。但若对主对角线上的元素应用变换 $A\mapsto T_{ij}(k)AT_{ij}(-k)$ 后会导致原本通过 $A\mapsto T_{ij}(k)A$ 将第 $i$ 行第 $j$ 列的元素消为零后右乘 $T_{ij}(-k)$ 即将 $A$ 的第 $i$ 列的 $-k$ 倍加到第 $j$ 列这一操作使得之前消为零的元素现在可能不为零，可能不能将其变为上三角或下三角形式。
 
-$$
-P_{ij}=
-\begin{bmatrix}
-I_{i-1}&&&&\\
-&0&&1&\\
-&&I_{j-i-1}&&\\
-&1&&0&\\
-&&&&I_{n-j}
-\end{bmatrix}
-$$
-
-其中两个 $1$ 分别在 $P_{ij}$ 的第 $i$ 和 $j$ 行，注意 $P_{ij}^{-1}=P_{ij}$。
-
-$$
-D_i(k)=
-\begin{bmatrix}
-I_{i-1}&&\\
-&k&\\
-&&I_{n-i}
-\end{bmatrix}
-$$
-
-其中 $k$ 在 $D_i(k)$ 的第 $i$ 行第 $i$ 列，注意 $D_i(k)^{-1}=D_i(k^{-1})$。
-
-$$
-T_{ij}(k)=
-\begin{bmatrix}
-I_{i-1}&&&&\\
-&1&&k&\\
-&&\ddots &&\\
-&&&1&\\
-&&&&I_{n-j}
-\end{bmatrix}
-$$
-
-其中 $k$ 在 $T_{ij}(k)$ 的第 $i$ 行第 $j$ 列，注意 $T_{ij}(k)^{-1}=T_{ij}(-k)$。
-
-若我们记 $E_{ij}$ 为第 $i$ 行第 $j$ 列的元素为 $1$、其余为零的 $n\times n$ 矩阵，那么
-
-- $P_{ij}=I_n-E_{ii}-E_{jj}+E_{ij}+E_{ji}$
-- $D_i(k)=I_n+(k-1)E_{ii}$
-- $T_{ij}(k)=I_n+kE_{ij}$
-
-易验证其逆矩阵。
-
-我们在对矩阵使用上述操作（左乘初等矩阵）后再右乘其逆矩阵即相似变换，左乘为行变换，易发现右乘即列变换。
-
-若我们能将矩阵通过相似变换变为上三角或下三角的形式，那么可以轻松求出其特征多项式。但我们发现若对主对角线上的元素应用变换 $A\mapsto T_{ij}(k)AT_{ij}(-k)$ 后会导致原本通过 $A\mapsto T_{ij}(k)A$ 将第 $i$ 行第 $j$ 列的元素消为零后右乘 $T_{ij}(-k)$ 即将 $A$ 的第 $i$ 列的 $-k$ 倍加到第 $j$ 列这一操作使得之前消为零的元素现在可能不为零，可能不能将其变为上三角或下三角形式。
-
-后文将说明我们对次对角线上的元素应用变换后得到的矩阵依然可以轻松得到其特征多项式。
+后文将说明对次对角线上的元素应用变换后得到的矩阵依然可以轻松得到其特征多项式。
 
 ### 上 Hessenberg 矩阵
 
@@ -365,7 +314,7 @@ $$
 
 至此完成了整个算法，该算法一般被称为 Hessenberg 算法。
 
-## 哈密顿凯莱（Hamilton-Cayley）定理
+## Cayley–Hamilton 定理
 
 对于任意的 $n$ 阶矩阵 $A$，特征多项式为 $f(\lambda)=|\lambda I-A|$，则必有 $f(A)=0$。
 
@@ -398,8 +347,8 @@ $$
     #include <random>
     #include <vector>
     
-    typedef std::vector<std::vector<int>> Matrix;
-    typedef long long i64;
+    using Matrix = std::vector<std::vector<int>>;
+    using i64 = int64_t;
     
     Matrix to_upper_Hessenberg(const Matrix &M, int mod) {
       Matrix H(M);
@@ -499,7 +448,7 @@ $$
     
     int main() {
       std::ios::sync_with_stdio(false);
-      std::cin.tie(0);
+      std::cin.tie(nullptr);
       int n, mod;
       std::cin >> n >> mod;
       Matrix M(n, std::vector<int>(n));
@@ -514,9 +463,9 @@ $$
 
 上述 Hessenberg 算法不具有数值的稳定性，所以 $\mathbb{R}^{n\times n}$ 上的矩阵在使用前需要其他算法进行调整或改用其他具有数值稳定性的算法。
 
-我们可以将特征多项式与常系数齐次线性递推联系起来，也可结合 Cayley-Hamilton 定理、多项式取模加速一些域上求矩阵幂次的算法。
+我们可以将特征多项式与常系数齐次线性递推联系起来，也可结合 Cayley–Hamilton 定理、多项式取模加速一些域上求矩阵幂次的算法。
 
-Cayley-Hamilton 定理指出
+Cayley–Hamilton 定理指出
 
 $$
 \begin{aligned}
@@ -544,6 +493,6 @@ $$
 
 ## 参考文献
 
-- Rizwana Rehman, Ilse C.F. Ipsen.[La Budde’s Method for Computing Characteristic Polynomials](https://ipsen.math.ncsu.edu/ps/charpoly3.pdf).
-- Marshall Law.[Computing Characteristic Polynomials of Matrices of Structured Polynomials](http://summit.sfu.ca/system/files/iritems1/17301/etd10125_.pdf).
-- Mike Paterson.[On the Number of Nonscalar Multiplications Necessary to Evaluate Polynomials](https://epubs.siam.org/doi/10.1137/0202007).
+-   Rizwana Rehman, Ilse C.F. Ipsen.[La Budde’s Method for Computing Characteristic Polynomials](https://ipsen.math.ncsu.edu/ps/charpoly3.pdf).
+-   Marshall Law.[Computing Characteristic Polynomials of Matrices of Structured Polynomials](http://summit.sfu.ca/system/files/iritems1/17301/etd10125_.pdf).
+-   Mike Paterson.[On the Number of Nonscalar Multiplications Necessary to Evaluate Polynomials](https://epubs.siam.org/doi/10.1137/0202007).

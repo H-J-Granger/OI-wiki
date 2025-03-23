@@ -4,8 +4,6 @@
 
 在高中初等数学中，排列组合多是利用列表、枚举等方法解题。
 
-* * *
-
 ## 加法 & 乘法原理
 
 ### 加法原理
@@ -39,35 +37,35 @@ $$
 全排列：$n$ 个人全部来排队，队长为 $n$。第一个位置可以选 $n$ 个，第二位置可以选 $n-1$ 个，以此类推得：
 
 $$
-\mathrm A_n^n = n(n-1)(n-2) \cdots 3 × 2 × 1 = n!
+\mathrm A_n^n = n(n-1)(n-2) \cdots 3 \times 2 \times 1 = n!
 $$
 
 全排列是排列数的一个特殊情况。
 
 ### 组合数
 
-从 $n$ 个不同元素中，任取 $m$($m\leq n$) 个元素组成一个集合，叫做从 $n$ 个不同元素中取出 $m$ 个元素的一个组合；从 $n$ 个不同元素中取出 $m$($m\leq n$) 个元素的所有组合的个数，叫做从 $n$ 个不同元素中取出 $m$ 个元素的组合数。用符号 $\mathrm C_n^m$ 来表示。
+从 $n$ 个不同元素中，任取 $m \leq n$ 个元素组成一个集合，叫做从 $n$ 个不同元素中取出 $m$ 个元素的一个组合；从 $n$ 个不同元素中取出 $m \leq n$ 个元素的所有组合的个数，叫做从 $n$ 个不同元素中取出 $m$ 个元素的组合数，用符号 $\dbinom{n}{m}$ 来表示，读作「$n$ 选 $m$」。
 
 组合数计算公式
 
 $$
-\mathrm C_n^m = \frac{\mathrm A_n^m}{m!} = \frac{n!}{m!(n - m)!}
+\dbinom{n}{m} = \frac{\mathrm A_n^m}{m!} = \frac{n!}{m!(n - m)!}
 $$
 
-如何理解上述公式？我们考虑 $n$ 个人 $m$($m \le n$) 个出来，不排队，不在乎顺序 $\mathrm C_n^m$。如果在乎排列那么就是 $\mathrm A_n^m$，如果不在乎那么就要除掉重复，那么重复了多少？同样选出的来的 $m$ 个人，他们还要“全排”得 $\mathrm A_n^m$，所以得：
+如何理解上述公式？我们考虑 $n$ 个人选 $m$ 个出来（$m \le n$），不排队，不在乎顺序。如果在乎顺序那么就是 $\mathrm A_n^m$，如果不在乎那么就要除掉重复，那么重复了多少？同样选出来的 $m$ 个人，他们还要「全排」得 $m!$，所以得：
 
 $$
 \begin{aligned}
-\mathrm C_n^m \times m! &= \mathrm A_n^m\\
-\mathrm C_n^m &= \frac{\mathrm A_n^m}{m!} = \frac{n!}{m!(n-m)!}
+\dbinom{n}{m} \times m! &= \mathrm A_n^m\\
+\dbinom{n}{m} &= \frac{\mathrm A_n^m}{m!} = \frac{n!}{m!(n-m)!}
 \end{aligned}
 $$
 
-组合数也常用 $\dbinom{n}{m}$ 表示，读作「$n$ 选 $m$」，即 $\displaystyle \mathrm C_n^m=\binom{n}{m}$。实际上，后者表意清晰明了，美观简洁，因此现在数学界普遍采用 $\dbinom{n}{m}$ 的记号而非 $\mathrm C_n^m$。
+组合数也常用 $\mathrm C_n^m$ 表示，即 $\displaystyle \mathrm C_n^m=\binom{n}{m}$。现在数学界普遍采用 $\dbinom{n}{m}$ 的记号而非 $\mathrm C_n^m$。
 
 组合数也被称为「二项式系数」，下文二项式定理将会阐述其中的联系。
 
-特别地，规定当 $m>n$ 时，$\mathrm A_n^m=\mathrm C_n^m=0$。
+特别地，规定当 $m>n$ 时，$\mathrm A_n^m=\dbinom{n}{m}=0$。
 
 ## 插板法
 
@@ -158,13 +156,13 @@ $$
 设 $n$ 为正整数，$x_i$ 为实数，
 
 $$
-(x_1 + x_2 + \cdots + x_t)^n = \sum_{满足 n_1 + \cdots + n_t=n 的非负整数解} \binom{n}{n_1n_2\cdots n_t} x_1^{n_1}x_2^{n_2}\cdots x_t^{n_t}
+(x_1 + x_2 + \cdots + x_t)^n = \sum_{满足 n_1 + \cdots + n_t=n 的非负整数解} \binom{n}{n_1,n_2,\cdots,n_t} x_1^{n_1}x_2^{n_2}\cdots x_t^{n_t}
 $$
 
-其中的 $\dbinom{n}{n_1,n_2,\cdots ,n_t}$ 是多项式系数，它的性质也很相似：
+其中的 $\dbinom{n}{n_1,n_2,\cdots,n_t}$ 是多项式系数，它的性质也很相似：
 
 $$
-\sum{\binom{n}{n_1n_2\cdots n_t}} = t^n
+\sum{\binom{n}{n_1,n_2,\cdots,n_t}} = t^n
 $$
 
 ## 排列与组合进阶篇
@@ -209,8 +207,8 @@ $$
 
 于是很自然地想到了容斥原理。容斥的模型如下：
 
-1. 全集：$\displaystyle \sum_{i=1}^kx_i=r$ 的非负整数解。
-2. 属性：$x_i\le n_i$。
+1.  全集：$\displaystyle \sum_{i=1}^kx_i=r$ 的非负整数解。
+2.  属性：$x_i\le n_i$。
 
 于是设满足属性 $i$ 的集合是 $S_i$，$\overline{S_i}$ 表示不满足属性 $i$ 的集合，即满足 $x_i\ge n_i+1$ 的集合（转化为上面插板法的问题三）。那么答案即为
 
@@ -293,16 +291,16 @@ $$
 二项式定理的另一种特殊情况，可取 $a=1, b=-1$。式子的特殊情况是取 $n=0$ 时答案为 $1$。
 
 $$
-\sum_{i=0}^m \binom{n}{i}\binom{m}{m-i} = \binom{m+n}{m}\ \ \ (n \geq m)\tag{6}
+\sum_{i=0}^m \binom{n}{i}\binom{m}{k-i} = \binom{m+n}{k}\tag{6}
 $$
 
-拆组合数的式子，在处理某些数据结构题时会用到。
+拆组合数的式子，在处理某些数据结构题时会用到。被称为 [范德蒙恒等式](https://en.wikipedia.org/wiki/Vandermonde%27s_identity)。
 
 $$
 \sum_{i=0}^n\binom{n}{i}^2=\binom{2n}{n}\tag{7}
 $$
 
-这是 $(6)$ 的特殊情况，取 $n=m$ 即可。
+这是 $(6)$ 的特殊情况，取 $n=k=m$ 即可。
 
 $$
 \sum_{i=0}^ni\binom{n}{i}=n2^{n-1}\tag{8}
@@ -320,7 +318,7 @@ $$
 \sum_{l=0}^n\binom{l}{k} = \binom{n+1}{k+1}\tag{10}
 $$
 
-通过组合分析一一考虑 $S={a_1, a_2, \cdots, a_{n+1}}$ 的 $k+1$ 子集数可以得证，在恒等式证明中比较常用。
+通过组合分析一一考虑 $S=\{a_1, a_2, \cdots, a_{n+1}\}$ 的 $k+1$ 子集数可以得证，在恒等式证明中比较常用。被称为 [朱世杰恒等式](https://en.wikipedia.org/wiki/Hockey-stick_identity)。
 
 $$
 \binom{n}{r}\binom{r}{k} = \binom{n}{k}\binom{n-k}{r-k}\tag{11}
@@ -333,3 +331,70 @@ $$
 $$
 
 其中 $F$ 是斐波那契数列。
+
+$$
+\binom{n+k}{k}^2=\sum_{j=0}^k\binom{k}{j}^2\binom{n+2k-j}{2k}\tag{13}
+$$
+
+通过 $(6)$ 可以证明。被称为 [李善兰恒等式](https://en.wikipedia.org/wiki/Li_Shanlan_identity)。
+
+## 二项式反演
+
+记 $f_n$ 表示恰好使用 $n$ 个不同元素形成特定结构的方案数，$g_n$ 表示从 $n$ 个不同元素中选出 $i \geq 0$ 个元素形成特定结构的总方案数。
+
+若已知 $f_n$ 求 $g_n$，那么显然有：
+
+$$
+g_n = \sum_{i = 0}^{n} \binom{n}{i} f_i
+$$
+
+若已知 $g_n$ 求 $f_n$，那么：
+
+$$
+f_n = \sum_{i = 0}^{n} \binom{n}{i} (-1)^{n-i} g_i
+$$
+
+上述已知 $g_n$ 求 $f_n$ 的过程，就称为 **二项式反演**。
+
+### 证明
+
+将反演公式的 $g_i$ 展开得到：
+
+$$
+\begin{aligned}
+f_n &= \sum_{i = 0}^{n} \binom{n}{i} (-1)^{n-i} \left[\sum_{j = 0}^{i} \binom{i}{j} f_j\right] \\
+&= \sum_{i = 0}^{n}\sum_{j = 0}^{i}\binom{n}{i}\binom{i}{j} (-1)^{n-i}f_j
+\end{aligned}
+$$
+
+先枚举 $j$，再枚举 $i$，得到：
+
+$$
+\begin{aligned}
+f_n &= \sum_{j = 0}^{n}\sum_{i = j}^{n}\binom{n}{i}\binom{i}{j} (-1)^{n-i}f_j \\
+&= \sum_{j = 0}^{n}f_j\sum_{i = j}^{n}\binom{n}{i}\binom{i}{j} (-1)^{n-i}
+\end{aligned}
+$$
+
+使用 [「组合数性质 | 二项式推论」](#组合数性质--二项式推论) 的公式 (11) 得到：
+
+$$
+\begin{aligned}
+f_n &= \sum_{j = 0}^{n}f_j\sum_{i = j}^{n}\binom{n}{j}\binom{n - j}{i - j} (-1)^{n-i} \\
+&= \sum_{j = 0}^{n}\binom{n}{j}f_j\sum_{i = j}^{n}\binom{n - j}{i - j} (-1)^{n-i}
+\end{aligned}
+$$
+
+令 $k = i - j$。则 $i = k + j$，上式转换为：
+
+$$
+f_n = \sum_{j = 0}^{n}\binom{n}{j}f_j\sum_{k = 0}^{n - j}\binom{n - j}{k} (-1)^{n-j-k}1^{k}
+$$
+
+使用 [「组合数性质 | 二项式推论」](#组合数性质--二项式推论) 的公式 (5) 得到：
+
+$$
+f_n = \sum_{j = 0}^{n}\binom{n}{j}f_j[n = j] = f_n
+$$
+
+证毕。
