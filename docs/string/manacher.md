@@ -40,37 +40,37 @@ $$
 
 该朴素算法的实现如下：
 
-???+note "实现"
-    ```cpp
-    // C++ Version
-    vector<int> d1(n), d2(n);
-    for (int i = 0; i < n; i++) {
-      d1[i] = 1;
-      while (0 <= i - d1[i] && i + d1[i] < n && s[i - d1[i]] == s[i + d1[i]]) {
-        d1[i]++;
-      }
-    
-      d2[i] = 0;
-      while (0 <= i - d2[i] - 1 && i + d2[i] < n &&
-             s[i - d2[i] - 1] == s[i + d2[i]]) {
-        d2[i]++;
-      }
-    }
-    ```
-    
-    ```python
-    # Python Version
-    d1 = [0] * n
-    d2 = [0] * n
-    for i in range(0, n):
-        d1[i] = 1
-        while 0 <= i - d1[i] and i + d1[i] < n and s[i - d1[i]] == s[i + d1[i]]:
-            d1[i] += 1
+???+ note "实现"
+    === "C++"
+        ```cpp
+        vector<int> d1(n), d2(n);
+        for (int i = 0; i < n; i++) {
+          d1[i] = 1;
+          while (0 <= i - d1[i] && i + d1[i] < n && s[i - d1[i]] == s[i + d1[i]]) {
+            d1[i]++;
+          }
         
-        d2[i] = 0
-        while 0 <= i - d2[i] - 1 and i + d2[i] < n and s[i - d2[i] - 1] == s[i + d2[i]]:
-            d2[i] += 1
-    ```
+          d2[i] = 0;
+          while (0 <= i - d2[i] - 1 && i + d2[i] < n &&
+                 s[i - d2[i] - 1] == s[i + d2[i]]) {
+            d2[i]++;
+          }
+        }
+        ```
+    
+    === "Python"
+        ```python
+        d1 = [0] * n
+        d2 = [0] * n
+        for i in range(0, n):
+            d1[i] = 1
+            while 0 <= i - d1[i] and i + d1[i] < n and s[i - d1[i]] == s[i + d1[i]]:
+                d1[i] += 1
+        
+            d2[i] = 0
+            while 0 <= i - d2[i] - 1 and i + d2[i] < n and s[i - d2[i] - 1] == s[i + d2[i]]:
+                d2[i] += 1
+        ```
 
 ## Manacher 算法
 
@@ -126,7 +126,7 @@ $$
     }_\text{try moving here}
     $$
 
-    该图示显示出，尽管以 $j$ 为中心的回文串可能更长，以致于超出「外部」回文串，但在位置 $i$，我们只能利用其完全落在」外部」回文串内的部分。然而位置 $i$ 的答案可能比这个值更大，因此接下来我们将运行朴素算法来尝试将其扩展至「外部」回文串之外，也即标识为 "try moving here" 的区域。
+    该图示显示出，尽管以 $j$ 为中心的回文串可能更长，以致于超出「外部」回文串，但在位置 $i$，我们只能利用其完全落在「外部」回文串内的部分。然而位置 $i$ 的答案可能比这个值更大，因此接下来我们将运行朴素算法来尝试将其扩展至「外部」回文串之外，也即标识为 "try moving here" 的区域。
 
 最后，仍有必要提醒的是，我们应当记得在计算完每个 $d_1[i]$ 后更新值 $(l, r)$。
 
@@ -148,69 +148,69 @@ Manacher 算法的另一部分显然也是线性的，因此总复杂度为 $O(n
 
 为了计算 $d_1[]$，我们有以下代码：
 
-```cpp
-// C++ Version
-vector<int> d1(n);
-for (int i = 0, l = 0, r = -1; i < n; i++) {
-  int k = (i > r) ? 1 : min(d1[l + r - i], r - i + 1);
-  while (0 <= i - k && i + k < n && s[i - k] == s[i + k]) {
-    k++;
-  }
-  d1[i] = k--;
-  if (i + k > r) {
-    l = i - k;
-    r = i + k;
-  }
-}
-```
+=== "C++"
+    ```cpp
+    vector<int> d1(n);
+    for (int i = 0, l = 0, r = -1; i < n; i++) {
+      int k = (i > r) ? 1 : min(d1[l + r - i], r - i + 1);
+      while (0 <= i - k && i + k < n && s[i - k] == s[i + k]) {
+        k++;
+      }
+      d1[i] = k--;
+      if (i + k > r) {
+        l = i - k;
+        r = i + k;
+      }
+    }
+    ```
 
-```python
-# Python Version
-d1 = [0] * n
-l, r = 0, -1
-for i in range(0, n):
-    k = 1 if i > r else min(d1[l + r - i], r - i + 1)
-    while 0 <= i - k and i + k < n and s[i - k] == s[i + k]:
-        k += 1
-    d1[i] = k
-    k -= 1
-    if i + k > r:
-        l = i - k
-        r = i + k
-```
+=== "Python"
+    ```python
+    d1 = [0] * n
+    l, r = 0, -1
+    for i in range(0, n):
+        k = 1 if i > r else min(d1[l + r - i], r - i + 1)
+        while 0 <= i - k and i + k < n and s[i - k] == s[i + k]:
+            k += 1
+        d1[i] = k
+        k -= 1
+        if i + k > r:
+            l = i - k
+            r = i + k
+    ```
 
 计算 $d_2[]$ 的代码十分类似，但是在算术表达式上有些许不同：
 
-```cpp
-// C++ Version
-vector<int> d2(n);
-for (int i = 0, l = 0, r = -1; i < n; i++) {
-  int k = (i > r) ? 0 : min(d2[l + r - i + 1], r - i + 1);
-  while (0 <= i - k - 1 && i + k < n && s[i - k - 1] == s[i + k]) {
-    k++;
-  }
-  d2[i] = k--;
-  if (i + k > r) {
-    l = i - k - 1;
-    r = i + k;
-  }
-}
-```
+=== "C++"
+    ```cpp
+    vector<int> d2(n);
+    for (int i = 0, l = 0, r = -1; i < n; i++) {
+      int k = (i > r) ? 0 : min(d2[l + r - i + 1], r - i + 1);
+      while (0 <= i - k - 1 && i + k < n && s[i - k - 1] == s[i + k]) {
+        k++;
+      }
+      d2[i] = k--;
+      if (i + k > r) {
+        l = i - k - 1;
+        r = i + k;
+      }
+    }
+    ```
 
-```python
-# Python Version
-d2 = [0] * n
-l, r = 0, -1
-for i in range(0, n):
-    k = 0 if i > r else min(d2[l + r - i + 1], r - i + 1)
-    while 0 <= i - k - 1 and i + k < n and s[i - k - 1] == s[i + k]:
-        k += 1
-    d2[i] = k
-    k -= 1
-    if i + k > r:
-        l = i - k - 1
-        r = i + k
-```
+=== "Python"
+    ```python
+    d2 = [0] * n
+    l, r = 0, -1
+    for i in range(0, n):
+        k = 0 if i > r else min(d2[l + r - i + 1], r - i + 1)
+        while 0 <= i - k - 1 and i + k < n and s[i - k - 1] == s[i + k]:
+            k += 1
+        d2[i] = k
+        k -= 1
+        if i + k > r:
+            l = i - k - 1
+            r = i + k
+    ```
 
 ### 统一处理
 
@@ -228,9 +228,9 @@ for i in range(0, n):
 
 ## 练习题目
 
-- [UVA #11475 "Extend to Palindrome"](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2470)
-- [「国家集训队」最长双回文串](https://www.luogu.com.cn/problem/P4555)
+-   [UVa #11475 "Extend to Palindrome"](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2470)
+-   [「国家集训队」最长双回文串](https://www.luogu.com.cn/problem/P4555)
 
-* * *
+***
 
 **本页面主要译自博文 [Нахождение всех подпалиндромов](http://e-maxx.ru/algo/palindromes_count) 与其英文翻译版 [Finding all sub-palindromes in $O(N)$](https://cp-algorithms.com/string/manacher.html)。其中俄文版版权协议为 Public Domain + Leave a Link；英文版版权协议为 CC-BY-SA 4.0。**

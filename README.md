@@ -2,7 +2,7 @@
 
 # 欢迎来到 **OI Wiki**！
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-brightgreen?logo=gitpod&style=flat-square)](https://gitpod.io/#https://github.com/OI-wiki/OI-wiki)  [![GitHub Actions](https://img.shields.io/github/workflow/status/OI-Wiki/OI-Wiki/Build?style=flat-square)](https://github.com/OI-wiki/OI-wiki/actions?query=workflow%3ABuild)  [![Uptime Robot Status](https://img.shields.io/uptimerobot/status/m781254113-3e3bac467c64fc99eafd383e.svg?style=flat-square)](https://status.oi-wiki.org/) [![Telegram](https://img.shields.io/badge/Telegram-OI%20Wiki-%232CA5E0?style=flat-square&logo=telegram)](https://t.me/OI_wiki)  [![QQ](https://img.shields.io/badge/QQ%20group-OI%20Wiki-blue?style=flat-square&logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=5EfkM6K)  [![GitHub watchers](https://img.shields.io/github/watchers/OI-Wiki/OI-Wiki.svg?style=social&label=Watch)](https://github.com/OI-wiki/OI-wiki)  [![GitHub stars](https://img.shields.io/github/stars/OI-Wiki/OI-Wiki.svg?style=social&label=Stars)](https://github.com/OI-wiki/OI-wiki)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-brightgreen?logo=gitpod&style=flat-square)](https://gitpod.io/#https://github.com/OI-wiki/OI-wiki)  [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/OI-wiki/OI-wiki/build.yml?style=flat-square&branch=master)](https://github.com/OI-wiki/OI-wiki/actions/workflows/build.yml)  [![Uptime Robot Status](https://img.shields.io/uptimerobot/status/m781254113-3e3bac467c64fc99eafd383e.svg?style=flat-square)](https://status.oi-wiki.org/) [![Telegram](https://img.shields.io/badge/Telegram-OI%20Wiki-%232CA5E0?style=flat-square&logo=telegram)](https://t.me/OI_wiki)  [![QQ](https://img.shields.io/badge/QQ%20group-OI%20Wiki-blue?style=flat-square&logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=5EfkM6K)  [![GitHub watchers](https://img.shields.io/github/watchers/OI-Wiki/OI-Wiki.svg?style=social&label=Watch)](https://github.com/OI-wiki/OI-wiki)  [![GitHub stars](https://img.shields.io/github/stars/OI-Wiki/OI-Wiki.svg?style=social&label=Stars)](https://github.com/OI-wiki/OI-wiki)
 
 * * *
 
@@ -41,13 +41,12 @@ cd OI-wiki
 pipenv install --pypi-mirror https://pypi.tuna.tsinghua.edu.cn/simple/
 
 # 使用我们的自定义主题（Windows 下请使用 Git Bash 执行）
-# 安装主题时将连接网络下载资源，可通过以下环境变量控制下载链接
-# scripts/pre-build/install-theme.sh:
-# - THEME_REPO
+# 安装主题时将连接网络下载资源，可通过以下配置项控制下载链接
+# .gitmodules:
+# - url
 # scripts/pre-build/install-theme-vendor.sh:
 # - MATHJAX_URL
 # - MATERIAL_ICONS_URL
-# - GITALK_REPO
 ./scripts/pre-build/install-theme.sh
 
 # 两种方法（选其一即可）：
@@ -87,10 +86,6 @@ python3 -m http.server
 python2 -m SimpleHTTPServer
 # 有些环境下找不到名叫 python3/python2 的可执行文件，不妨运行 python 试试
 ```
-
-### Docker
-
-详见 [Docker 部署](https://oi-wiki.org/intro/docker-deploy/)
 
 * * *
 
